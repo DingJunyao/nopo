@@ -133,7 +133,7 @@ class MyEl(El):
 example_el = MyEl(el=el1 / el2)
 ```
 
-## build
+## Build
 
 ```bash
 python -m build
