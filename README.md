@@ -52,7 +52,7 @@ class GitHubPage:
         self.textbox.send_keys(Keys.ENTER)
         # Elements define
         # Use El_1 / El_2 to define cascading element(s)
-        # Use El(el=El_old) or Els(els=El_old) to turn type
+        # Use El(el=El_old) or Els(el=El_old) to turn type
         lis = Els(el=(self.main_page / El(By.XPATH, './/nav[1]') / El(By.TAG_NAME, 'a')))
         lis[-1].click()
         self.user_a.click()
@@ -80,8 +80,8 @@ example_els = Els(by, selector_str)
 You can also use attribute `driver` to specify a webdriver or use in other occasions:
 
 ```python
-example_el = El(by, selector_str, driver = driver)
-example_els = Els(by, selector_str, driver = driver)
+example_el = El(by, selector_str, driver=driver)
+example_els = Els(by, selector_str, driver=driver)
 ```
 
 ### Operating
@@ -120,7 +120,7 @@ el2 = El(by2, selector_str2)
 example_el = el1 / el2
 ```
 
-the type of `example_el` above is same as `el1`.
+The type of `example_el` above is same as `el1`.
 
 ### Extending
 
