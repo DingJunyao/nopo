@@ -2,7 +2,7 @@
 
 ![](./logo.png)
 
-![](https://badge.fury.io/py/nopo.svg)
+[![PyPI](https://img.shields.io/pypi/v/nopo)](https://pypi.org/project/nopo/)
 
 nopo (not only page object) is a package for Page Object Model (POM), a tool based on Selenium that helps you build POM in web test.
 
@@ -90,29 +90,29 @@ example_els = Els(by, selector_str, driver=driver)
 el.text             # Text of the element.
 el.value            # Return text. If text is None or '', return value property (mostly for input element).
 el.exist            # To show if the element exists.
-el.exist_wait       # To show if the element exists, Add wait.
+el.exist_wait       # To show if the element exists (with wait).
 el.is_selected      # Return if the element is selected.
 el.selectors_xpath  # Return selector to xpath.
 el.elem             # Return the WebElement instance of the element (with wait).
 el.elem_clickable   # Return the WebElement instance of the element (wait for clickable).
 el.elem_no_wait     # Return the WebElement instance of the element (without wait).
 
-el.click(self)                                  # Click the element.
-el.clear()                                      # Clear the element.
-el.send_keys(keys: str, clear: bool = False)    # Send keys to element. If clear is True, clear the element before sending.
-el.csk(keys)                                    # Clear and send keys to element.
-el.nn_csk(self, keys: str)                      # Clear and send keys if keys is not None.
-el.get_attribute(attr)                          # Get attribute of the element.
-el.get_property(property_text)                  # Get property of the element.
-el.wait_for_click()                             # Wait until the element is clickable.
-el.wait_for_present()                           # Wait until the element is present.
+el.click()                      # Click the element.
+el.clear()                      # Clear the element.
+el.send_keys(keys, clear=False) # Send keys to element. If clear is True, clear the element before sending.
+el.csk(keys)                    # Clear and send keys to element.
+el.nn_csk(keys)                 # Clear and send keys if keys is not None.
+el.get_attribute(attr)          # Get attribute of the element.
+el.get_property(property_text)  # Get property of the element.
+el.wait_for_click()             # Wait until the element is clickable.
+el.wait_for_present()           # Wait until the element is present.
 
-El.single_selector_to_xpath(by: selenium.webdriver.common.by.By, selector: str) # Return single selector to xpath.
+El.single_selector_to_xpath(by, selector) # Return single selector to xpath.
 ```
 
 ### Cascading
 
-You can use `/` operation code to cascading selectors:
+You can use `/` to cascading selectors:
 
 ```python
 el1 = El(by1, selector_str1)

@@ -11,7 +11,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 
 class El:
-    """Element for each page. You can use El_1 / El_2 for multiply selectors."""
+    """Element for each page. You can use El_1 / El_2 for cascading selectors."""
 
     def __init__(
             self,
@@ -148,7 +148,7 @@ class El:
 
     @property
     def exist_wait(self) -> bool:
-        """To show if the element exists, Add wait."""
+        """To show if the element exists (with wait)."""
         try:
             el = self.elem
             return True

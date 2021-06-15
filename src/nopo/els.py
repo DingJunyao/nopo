@@ -14,6 +14,7 @@ from .el import El
 
 
 class Els:
+    """Like a list of El s, but with more function."""
     def __init__(
             self,
             by: By = None,
