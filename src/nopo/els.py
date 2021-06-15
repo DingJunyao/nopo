@@ -97,14 +97,19 @@ class Els:
         return len(self.driver.find_elements(By.XPATH, self.selectors_xpath))
 
     def __getitem__(self, item):
+        length = self.__len__()
         if isinstance(item, slice):
-            return [self.__getitem__(i) for i in range(self.__len__())[item]]
-        elif isinstance(item, numbers.Integral):
+            return [self.__getitem__(i) for i in range(length)[item]]
+        elif isinstance(item, int):
             if item >= 0:
                 xpath_index = item + 1
             else:
-                xpath_index = self.__len__() + item + 1
+                xpath_index = length + item + 1
+            if xpath_index > length or xpath_index <= 0:
+                raise IndexError(f'index ({item}) out of range ({length})')
             return El(By.XPATH, f'({self.selectors_xpath})[{xpath_index}]', driver=self.driver)
+        else:
+            raise TypeError(f'item must be slice or int, not {type(item)}')
 
     def __iter__(self):
         self.__order = -1

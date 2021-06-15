@@ -2,7 +2,7 @@
 
 ![](./logo.png)
 
-[![PyPI](https://img.shields.io/pypi/v/nopo)](https://pypi.org/project/nopo/)
+[![PyPI](https://img.shields.io/pypi/v/nopo)](https://pypi.org/project/nopo/) ![PyPI - Downloads](https://img.shields.io/pypi/dm/nopo)
 
 nopo (not only page object) is a package for Page Object Model (POM), a tool based on Selenium that helps you build POM in web test.
 
