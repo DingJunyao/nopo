@@ -94,6 +94,9 @@ class Els:
         return xpath
 
     def __len__(self):
+        for _ in range(self.max_time * 4):
+            if len(self.driver.find_elements(By.XPATH, self.selectors_xpath)) == 0:
+                time.sleep(0.25)
         return len(self.driver.find_elements(By.XPATH, self.selectors_xpath))
 
     def __getitem__(self, item):
@@ -107,7 +110,7 @@ class Els:
                 xpath_index = length + item + 1
             if xpath_index > length or xpath_index <= 0:
                 raise IndexError(f'index ({item}) out of range ({length})')
-            return El(By.XPATH, f'({self.selectors_xpath})[{xpath_index}]', driver=self.driver)
+            return El(By.XPATH, f'({self.selectors_xpath})[{xpath_index}]', driver=self.driver, max_time=self.max_time)
         else:
             raise TypeError(f'item must be slice or int, not {type(item)}')
 
