@@ -16,6 +16,7 @@ class GitHubPage:
     name = El(By.XPATH, '//span[@itemprop="name"]')
 
     def search_user(self, name):
+        self.textbox.send_keys(name+"1212", clear=True)
         self.textbox.send_keys(name, clear=True)
         self.textbox.send_keys(Keys.ENTER)
         lis = Els(el=(self.main_page / El(By.XPATH, './/nav[1]') / El(By.TAG_NAME, 'a')))

@@ -164,28 +164,38 @@ class El:
         """Click the element."""
         return self.elem_clickable.click()
 
-    def clear(self):
-        """Clear the element."""
-        return self.elem_clickable.clear()
+    def clear(self, force: bool = False):
+        """Clear the element. Use force=True to ensure the element can be cleared to deal with some situation."""
+        self.elem_clickable.clear()
+        if force:
+            if self.elem_clickable.get_property('value'):
+                self.driver.execute_script(
+                    'document.evaluate(arguments[0],document).iterateNext().value=""',
+                    self.selectors_xpath
+                )
 
-    def send_keys(self, keys: str, clear: bool = False):
+    def send_keys(self, keys: str, clear: bool = False, force_clear: bool = False):
         """Send keys to element.
 
         :param keys: Keys to send.
         :param clear: Clear before send keys or not. Defaults to False.
+        :param force_clear: Set it to True to ensure the element can be cleared to deal with some situation.
+                Invaild if clear=False.
         """
         if clear:
-            self.elem_clickable.clear()
+            self.clear(force=force_clear)
         return self.elem_clickable.send_keys(keys)
 
-    def csk(self, keys):
+    def csk(self, keys, force_clear: bool = False):
         """Clear and send keys to given element."""
-        return self.send_keys(keys, True)
+        return self.send_keys(keys, True, force_clear=force_clear)
 
-    def nn_csk(self, keys: str):
-        """Clear and send keys if keys is not None."""
+    def nn_csk(self, keys: str, force_clear: bool = False):
+        """Clear and send keys if keys is not None.
+        Use force_clear=True to ensure the element can be cleared to deal with some situation.
+        """
         if keys is not None:
-            return self.csk(keys)
+            return self.csk(keys, force_clear=force_clear)
 
     def get_attribute(self, attr):
         """Get attribute of the element."""

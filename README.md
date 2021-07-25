@@ -97,15 +97,15 @@ el.elem             # Return the WebElement instance of the element (with wait).
 el.elem_clickable   # Return the WebElement instance of the element (wait for clickable).
 el.elem_no_wait     # Return the WebElement instance of the element (without wait).
 
-el.click()                      # Click the element.
-el.clear()                      # Clear the element.
-el.send_keys(keys, clear=False) # Send keys to element. If clear is True, clear the element before sending.
-el.csk(keys)                    # Clear and send keys to element.
-el.nn_csk(keys)                 # Clear and send keys if keys is not None.
-el.get_attribute(attr)          # Get attribute of the element.
-el.get_property(property_text)  # Get property of the element.
-el.wait_for_click()             # Wait until the element is clickable.
-el.wait_for_present()           # Wait until the element is present.
+el.click()                                          # Click the element.
+el.clear(force=False)                               # Clear the element. Use force=True to ensure the element can be cleared to deal with some situation.
+el.send_keys(keys, clear=False, force_clear=False)  # Send keys to element. If clear is True, clear the element before sending. If clear and force are True, clear will be in force mode.
+el.csk(keys, force_clear=False)                     # Clear and send keys to element. If force_clear is True, clear will be in force mode.
+el.nn_csk(keys, force_clear=False)                  # Clear and send keys if keys is not None. If force_clear is True, clear will be in force mode.
+el.get_attribute(attr)                              # Get attribute of the element.
+el.get_property(property_text)                      # Get property of the element.
+el.wait_for_click()                                 # Wait until the element is clickable.
+el.wait_for_present()                               # Wait until the element is present.
 
 El.single_selector_to_xpath(by, selector) # Return single selector to xpath.
 ```
