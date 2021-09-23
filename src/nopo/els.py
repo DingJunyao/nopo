@@ -1,14 +1,9 @@
-import numbers
 import time
 from typing import Tuple
 
 from cssselect import GenericTranslator
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
 
 from .el import El
 
@@ -26,7 +21,6 @@ class Els:
     ):
         """Init the El element.
 
-        :type els: Els
         :param by: How to select the element.
         :param selector_str: Selector text of the element.
         :param selectors: Tuple for multiply selectors (By, selector_str).
@@ -63,7 +57,7 @@ class Els:
 
     @staticmethod
     def single_selector_to_xpath(by: By, selector: str):
-        """Return single selector to xpath."""
+        """Returns single selector to xpath."""
         if by == By.XPATH or by == By.TAG_NAME:
             return selector
         elif by == By.ID:
@@ -79,7 +73,7 @@ class Els:
 
     @property
     def selectors_xpath(self) -> str:
-        """Return selector to xpath."""
+        """Returns selector to xpath."""
         xpath = ''
         for index, selector in enumerate(self.selectors):
             if index != 0:

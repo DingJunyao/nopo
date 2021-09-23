@@ -88,14 +88,18 @@ example_els = Els(by, selector_str, driver=driver)
 
 ```python
 el.text             # Text of the element.
-el.value            # Return text. If text is None or '', return value property (mostly for input element).
+el.value            # Returns text. If text is None or '', return value property (mostly for input element).
 el.exist            # To show if the element exists.
 el.exist_wait       # To show if the element exists (with wait).
-el.is_selected      # Return if the element is selected.
-el.selectors_xpath  # Return selector to xpath.
-el.elem             # Return the WebElement instance of the element (with wait).
-el.elem_clickable   # Return the WebElement instance of the element (wait for clickable).
-el.elem_no_wait     # Return the WebElement instance of the element (without wait).
+el.is_selected      # Returns if the element is selected.
+el.selectors_xpath  # Returns selector to xpath.
+el.elem             # Returns the WebElement instance of the element (with wait).
+el.elem_clickable   # Returns the WebElement instance of the element (wait for clickable).
+el.elem_no_wait     # Returns the WebElement instance of the element (without wait).
+
+el.options                  # Returns a list of all options belonging to this select tag
+el.all_selected_options     # Returns a list of all selected options belonging to this select tag
+el.first_selected_option    # Returns the first selected option in this select tag.
 
 el.click()                                          # Click the element.
 el.clear(force=False)                               # Clear the element. Use force=True to ensure the element can be cleared to deal with some situation.
@@ -106,6 +110,16 @@ el.get_attribute(attr)                              # Get attribute of the eleme
 el.get_property(property_text)                      # Get property of the element.
 el.wait_for_click()                                 # Wait until the element is clickable.
 el.wait_for_present()                               # Wait until the element is present.
+
+el.select_by_value(value)           # Select options by given value argument.
+el.select_by_index(index)           # Select the option at the given index.
+el.select_by_visible_text(text)     # Select options by visible text.
+el.deselect_all()                   # Clear all selected entries.
+el.deselect_by_value(value)         # Deselect options by given value argument.
+el.deselect_by_index(index)         # Deselect the option at the given index.
+el.deselect_by_visible_text(text)   # Deselect options by visible text.
+
+el.switch_in()  # Switch in the frame.
 
 El.single_selector_to_xpath(by, selector) # Return single selector to xpath.
 ```
@@ -148,4 +162,4 @@ python3 -m build
 
 ## License
 
-Apache License Verison 2.0
+Apache License Version 2.0

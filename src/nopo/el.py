@@ -7,6 +7,7 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
 
@@ -58,10 +59,9 @@ class El:
         """Use El_1 / El_2 for cascading selectors."""
         return El(selectors=self.selectors + other.selectors, max_time=self.max_time, driver=self.driver)
 
-
     @staticmethod
     def single_selector_to_xpath(by: By, selector: str):
-        """Return single selector to xpath."""
+        """Returns single selector to xpath."""
         if by == By.XPATH or by == By.TAG_NAME:
             return selector
         elif by == By.ID:
@@ -77,7 +77,7 @@ class El:
 
     @property
     def selectors_xpath(self) -> str:
-        """Return selector to xpath."""
+        """Returns selector to xpath."""
         xpath = ''
         for index, selector in enumerate(self.selectors):
             if index != 0:
@@ -103,7 +103,7 @@ class El:
 
     @property
     def elem_no_wait(self) -> WebElement:
-        """Return the WebElement instance of the element (without wait)."""
+        """Returns the WebElement instance of the element (without wait)."""
         web_elem = self.driver
         for selector in self.selectors:
             web_elem = web_elem.find_element(*selector)
@@ -111,7 +111,7 @@ class El:
 
     @property
     def elem(self) -> WebElement:
-        """Return the WebElement instance of the element (with wait)."""
+        """Returns the WebElement instance of the element (with wait)."""
         try:
             self.wait_for_present()
         except TimeoutException:
@@ -125,7 +125,7 @@ class El:
 
     @property
     def elem_clickable(self) -> WebElement:
-        """Return the WebElement instance of the element (wait for clickable)."""
+        """Returns the WebElement instance of the element (wait for clickable)."""
         try:
             self.wait_for_click()
         except TimeoutException:
@@ -141,7 +141,7 @@ class El:
     def exist(self) -> bool:
         """To show if the element exists."""
         try:
-            el = self.elem_no_wait
+            _ = self.elem_no_wait
             return True
         except NoSuchElementException:
             return False
@@ -150,7 +150,7 @@ class El:
     def exist_wait(self) -> bool:
         """To show if the element exists (with wait)."""
         try:
-            el = self.elem
+            _ = self.elem
             return True
         except NoSuchElementException:
             return False
@@ -180,7 +180,7 @@ class El:
         :param keys: Keys to send.
         :param clear: Clear before send keys or not. Defaults to False.
         :param force_clear: Set it to True to ensure the element can be cleared to deal with some situation.
-                Invaild if clear=False.
+                Invalid if clear=False.
         """
         if clear:
             self.clear(force=force_clear)
@@ -207,7 +207,7 @@ class El:
 
     @property
     def value(self):
-        """Return text. If text is None or '', return value property (mostly for input element)."""
+        """Returns text. If text is None or '', return value property (mostly for input element)."""
         return self.text or self.get_property('value')
 
     def __str__(self):
@@ -220,5 +220,95 @@ class El:
 
     @property
     def is_selected(self):
-        """Return if the element is selected."""
+        """Returns if the element is selected."""
         return self.elem_clickable.is_selected()
+
+    # Select methods
+
+    @property
+    def options(self):
+        """Returns a list of all options belonging to this select tag."""
+        from .els import Els
+        return Els(el=self / El(By.TAG_NAME, 'option'))
+
+    @property
+    def all_selected_options(self):
+        """Returns a list of all selected options belonging to this select tag."""
+        ret = []
+        for opt in self.options:
+            if opt.is_selected():
+                ret.append(opt)
+        return ret
+
+    @property
+    def first_selected_option(self):
+        """The first selected option in this select tag (or the currently selected option in a normal select)."""
+        for opt in self.options:
+            if opt.is_selected():
+                return opt
+        raise NoSuchElementException("No options are selected")
+
+    @property
+    def _select_el(self):
+        """Returns Select element.
+
+        :raise UnexpectedTagNameException if not support.
+        """
+        return Select(self.elem_clickable)
+
+    def select_by_value(self, value):
+        """Select options by given value argument.
+
+        :param value: Value of the value argument of the option. e.g., 'foo' in <option value="foo">Bar</option>.
+        """
+        return self._select_el.select_by_value(value)
+
+    def select_by_index(self, index):
+        """Select the option at the given index. This is done by examining the "index" attribute of an element, and not
+            merely by counting.
+
+        :param index: The option at this index will be selected
+        """
+        return self._select_el.select_by_index(index)
+
+    def select_by_visible_text(self, text):
+        """Select options by visible text.
+
+        :param text: Visible text of the option. e.g., 'Bar' in <option value="foo">Bar</option>
+        """
+        return self._select_el.select_by_visible_text(text)
+
+    def deselect_all(self):
+        """Clear all selected entries. This is only valid when the SELECT supports multiple selections.
+
+        :raise NotImplementedError If the SELECT does not support multiple selections
+        """
+        return self._select_el.deselect_all()
+
+    def deselect_by_value(self, value):
+        """Deselect options by given value argument.
+
+        :param value: Value of the value argument of the option. e.g., 'foo' in <option value="foo">Bar</option>
+        """
+        return self._select_el.deselect_by_value(value)
+
+    def deselect_by_index(self, index):
+        """Deselect the option at the given index. This is done by examining the "index" attribute of an
+           element, and not merely by counting.
+
+        :param index: The option at this index will be deselected
+        """
+        return self._select_el.deselect_by_index(index)
+
+    def deselect_by_visible_text(self, text):
+        """Deselect options by visible text.
+
+        :param text: Visible text of the option. e.g., 'Bar' in <option value="foo">Bar</option>
+        """
+        return self._select_el.deselect_by_visible_text(text)
+
+    # iframe switch in
+
+    def switch_in(self):
+        """Switch in the frame. Ensure accessible before calling."""
+        return self.driver.switch_to.frame(self.elem)
