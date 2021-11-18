@@ -1,2 +1,2 @@
-cssselect~=1.1.0
-selenium~=3.141.0
+cssselect
+selenium
