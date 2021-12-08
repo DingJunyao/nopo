@@ -1,5 +1,4 @@
 import time
-from typing import Tuple
 
 from cssselect import GenericTranslator
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -12,9 +11,9 @@ class Els:
     """Like a list of El s, but with more function."""
     def __init__(
             self,
-            by: By = None,
+            by: str = None,
             selector_str: str = None,
-            selectors: Tuple[Tuple[By, str]] = None,
+            selectors: tuple[tuple[By, str]] = None,
             max_time: int = 10,
             driver: WebDriver = None,
             el=None
@@ -56,7 +55,7 @@ class Els:
         return Els(selectors=self.selectors + other.selectors, max_time=self.max_time, driver=self.driver)
 
     @staticmethod
-    def single_selector_to_xpath(by: By, selector: str):
+    def single_selector_to_xpath(by: str, selector: str):
         """Returns single selector to xpath."""
         if by == By.XPATH or by == By.TAG_NAME:
             return selector
@@ -117,4 +116,3 @@ class Els:
         if self.__order >= self.__len__():
             raise StopIteration()
         return self.__getitem__(self.__order)
-

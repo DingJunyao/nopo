@@ -6,8 +6,6 @@
 
 nopo (not only page object) is a package for Page Object Model (POM), a tool based on Selenium that helps you build POM in web test.
 
-Notice: nopo is still in development, so the API is currently unstable.
-
 ## Features
 
 - Define and operate an element or elements like using Selenium (but with advanced features)
@@ -27,12 +25,10 @@ pip install nopo
 Here shows a simple usage example:
 
 ```python
-
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from nopo import El, Els
+from nopo import El, Els, By
 
 
 class GitHubPage:
@@ -150,6 +146,8 @@ example_el = MyEl(el=el1 / el2)
 ## Build
 
 ```bash
+pip install -r requirements.txt
+
 python -m build
 # or
 python3 -m build

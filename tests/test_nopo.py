@@ -1,10 +1,8 @@
 import time
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from nopo import El, Els
+from src.nopo import El, Els, By
 
 
 class GitHubPage:
@@ -44,15 +42,13 @@ class W3SchoolsPage:
         return self.selection.select_by_visible_text(selection)
 
 
-if __name__ == '__main__':
-    driver = webdriver.Chrome()
-    driver.maximize_window()
-    driver.get('https://github.com/')
-    gh_page = GitHubPage(driver)
+def test_nopo(selenium):
+    selenium.maximize_window()
+    selenium.get('https://github.com/')
+    gh_page = GitHubPage(selenium)
     gh_page.search_user('DingJunyao')
-    driver.get('https://www.w3school.com.cn/tiy/t.asp?f=eg_html_elements_select')
-    w3_page = W3SchoolsPage(driver)
+    selenium.get('https://www.w3school.com.cn/tiy/t.asp?f=eg_html_elements_select')
+    w3_page = W3SchoolsPage(selenium)
     w3_page.iframe.switch_in()
     assert [a.text for a in w3_page.selections] == ['Volvo', 'Saab', 'Fiat', 'Audi']
     w3_page.select('Fiat')
-    driver.quit()

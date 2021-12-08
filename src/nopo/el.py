@@ -1,5 +1,5 @@
 import time
-from typing import Tuple, Optional
+from typing import Optional
 
 from cssselect import GenericTranslator
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -16,9 +16,9 @@ class El:
 
     def __init__(
             self,
-            by: By = None,
+            by: str = None,
             selector_str: str = None,
-            selectors: Tuple[Tuple[By, str]] = None,
+            selectors: tuple[tuple[str]] = None,
             max_time: int = 10,
             driver: WebDriver = None,
             el=None
@@ -60,7 +60,7 @@ class El:
         return El(selectors=self.selectors + other.selectors, max_time=self.max_time, driver=self.driver)
 
     @staticmethod
-    def single_selector_to_xpath(by: By, selector: str):
+    def single_selector_to_xpath(by: str, selector: str):
         """Returns single selector to xpath."""
         if by == By.XPATH or by == By.TAG_NAME:
             return selector

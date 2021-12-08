@@ -1,2 +1,6 @@
 cssselect
 selenium
+pytest
+pytest-selenium
+build
+twine
