@@ -4,7 +4,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/nopo)](https://pypi.org/project/nopo/) ![PyPI - Downloads](https://img.shields.io/pypi/dm/nopo)
 
-nopo (not only page object) 是一个关于 Page Object 模型（PO模型，POM）的包，基于 Selenium，帮助你在 Web 测试中构建 POM。
+nopo （not only page object 的缩写） 是一个关于 Page Object 模型（PO模型，POM）的包，基于 Selenium，帮助你在 Web 测试中构建 POM。
 
 [View README in English](README.md)
 
@@ -164,7 +164,7 @@ python3 -m build
 ## 未来计划
 
 - 添加更多操作功能
-- 为前端框架（如 [Ant Design](https://ant.design/) 和 [Element](https://element-plus.org/))编写开箱即用的元素类
+- 为前端框架（如 [Ant Design](https://ant.design/) 和 [Element](https://element-plus.org/)）编写开箱即用的元素类
 
 ## 协议
 
