@@ -1,10 +1,14 @@
 # nopo
 
-![](./logo.png)
+![](logo.png)
 
 [![PyPI](https://img.shields.io/pypi/v/nopo)](https://pypi.org/project/nopo/) ![PyPI - Downloads](https://img.shields.io/pypi/dm/nopo)
 
 nopo (not only page object) is a package for Page Object Model (POM), a tool based on Selenium that helps you build POM in web test.
+
+[查看中文文档](README_zh.md)
+
+[View the development of it (in Chinese)](https://4ading.com/posts/nopo-development)
 
 ## Features
 
@@ -130,7 +134,12 @@ el2 = El(by2, selector_str2)
 example_el = el1 / el2
 ```
 
-The type of `example_el` above is same as `el1`.
+The type of `example_el` above is same as `el1`, and find element using selector of `el1` and `el2`, like the following code in selenium:
+
+```python
+el1 = driver.find_element.by(by1, selector_str1)
+example_el = el1.find_element.by(by2, selector_str2)
+```
 
 ### Extending
 
