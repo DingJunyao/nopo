@@ -104,7 +104,7 @@ el.click()                                          # 单击元素
 el.clear(force=False)                               # 清除元素内文本（比如 input 元素）. 设置 force=True 确保元素内文本清除干净，也就是强制模式（在某些场合适用）
 el.send_keys(keys, clear=False, force_clear=False)  # 向元素输入按键或文本。如果 clear 为 True，则输入前会清空元素内文本。如果 clear 和 force 均为 True，清除方法进入强制模式
 el.csk(keys, force_clear=False)                     # 清空元素内文本，并向元素输入按键或文本。如果 force_clear 为 True，清除方法进入强制模式
-el.nn_csk(keys, force_clear=False)                  # Clear and send keys if keys is not None. 如果 force_clear 为 True，清除方法进入强制模式
+el.nn_csk(keys, force_clear=False)                  # 如果keys 非 None，则清空元素内文本，并向元素输入按键或文本。如果 force_clear 为 True，清除方法进入强制模式
 el.get_attribute(attr)                              # 获取元素的参数（attribute，偏向于 HTML 层面）
 el.get_property(property_text)                      # 获取元素的属性（property，偏向于 JS 层面）
 el.wait_for_click()                                 # 等待到元素可点击
