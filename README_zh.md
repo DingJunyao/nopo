@@ -40,19 +40,19 @@ class GitHubPage:
     def __init__(self, drv):
         self.driver = drv
 
-    # Define like Selenium
+    # 像 Selenium 一样定义
     textbox = El(By.XPATH, '//input[@aria-label="Search GitHub"]')
     main_page = El(By.TAG_NAME, 'main')
     user_a = El(By.CLASS_NAME, 'mr-1')
     name = El(By.XPATH, '//span[@itemprop="name"]')
 
     def search_user(self, name):
-        # Operate like Selenium, but with advanced features.
+        # 像 Selenium 一样操作，不过有更多的功能
         self.textbox.send_keys(name, clear=True)
         self.textbox.send_keys(Keys.ENTER)
-        # Elements define
-        # Use El_1 / El_2 to define cascading element(s)
-        # Use El(el=El_old) or Els(el=El_old) to turn type
+        # 元素定义
+        # 用 El_1 / El_2 定义层叠的元素
+        # 用 El(el=El_old) 或 Els(el=El_old) 改变元素的数据类型
         lis = Els(el=(self.main_page / El(By.XPATH, './/nav[1]') / El(By.TAG_NAME, 'a')))
         lis[-1].click()
         self.user_a.click()
