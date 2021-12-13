@@ -125,7 +125,7 @@ El.single_selector_to_xpath(by, selector) # 将单个选择器转换为 XPath
 
 ### 层叠
 
-使用 `/` 操作符链接多个元素，得到新元素。新元素的选择器为两者层叠而成:
+使用 `/` 操作符链接多个元素，得到新元素。新元素的选择器为两者层叠而成：
 
 ```python
 el1 = El(by1, selector_str1)
