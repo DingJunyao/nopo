@@ -59,6 +59,11 @@ class El:
         """Use El_1 / El_2 for cascading selectors."""
         return El(selectors=self.selectors + other.selectors, max_time=self.max_time, driver=self.driver)
 
+    def __itruediv__(self, other):
+        """El_1 /= El_2 is equal to El_1 = El_1 / El_2."""
+        self.selectors = self.selectors + other.selectors
+        return self
+
     @staticmethod
     def single_selector_to_xpath(by: str, selector: str):
         """Returns single selector to xpath."""
@@ -154,6 +159,9 @@ class El:
             return True
         except NoSuchElementException:
             return False
+
+    # True if exist with wait, and False if not.
+    __bool__ = exist_wait
 
     @property
     def text(self) -> Optional[str]:

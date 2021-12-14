@@ -54,6 +54,11 @@ class Els:
         """Use Els_1 / Els_2 for cascading selectors."""
         return Els(selectors=self.selectors + other.selectors, max_time=self.max_time, driver=self.driver)
 
+    def __itruediv__(self, other):
+        """Els_1 /= Els_2 is equal to Els_1 = Els_1 / Els_2."""
+        self.selectors = self.selectors + other.selectors
+        return self
+
     @staticmethod
     def single_selector_to_xpath(by: str, selector: str):
         """Returns single selector to xpath."""
@@ -116,3 +121,7 @@ class Els:
         if self.__order >= self.__len__():
             raise StopIteration()
         return self.__getitem__(self.__order)
+
+    def __bool__(self) -> bool:
+        """True if exist with wait, and False if not."""
+        return bool(self.__len__())

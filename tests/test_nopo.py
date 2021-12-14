@@ -20,7 +20,11 @@ class GitHubPage:
         self.textbox.send_keys(name, clear=True)
         self.textbox.send_keys(Keys.ENTER)
         time.sleep(5)
-        lis = Els(el=(self.main_page / El(By.XPATH, './/nav[1]') / El(By.TAG_NAME, 'a')))
+        mid_el = self.main_page / El(By.XPATH, './/nav[1]')
+        mid_el_id = id(mid_el)
+        mid_el /= El(By.TAG_NAME, 'a')
+        assert id(mid_el) == mid_el_id
+        lis = Els(el=mid_el)
         lis[-1].click()
         self.user_a.click()
         assert self.name.value == 'Ding Junyao'
