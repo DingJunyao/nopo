@@ -160,9 +160,6 @@ class El:
         except NoSuchElementException:
             return False
 
-    # True if exist with wait, and False if not.
-    __bool__ = exist_wait
-
     @property
     def text(self) -> Optional[str]:
         """Text of the element."""

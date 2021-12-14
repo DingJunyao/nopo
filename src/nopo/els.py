@@ -121,7 +121,3 @@ class Els:
         if self.__order >= self.__len__():
             raise StopIteration()
         return self.__getitem__(self.__order)
-
-    def __bool__(self) -> bool:
-        """True if exist with wait, and False if not."""
-        return bool(self.__len__())
