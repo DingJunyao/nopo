@@ -1,17 +1,20 @@
+from __future__ import annotations
+
 import time
 from typing import Optional
 
-from cssselect import GenericTranslator
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
-from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
+from .el_parent import ElParent
 
-class El:
+
+class El(ElParent):
     """Element for each page. You can use El_1 / El_2 for cascading selectors."""
 
     def __init__(
@@ -21,7 +24,7 @@ class El:
             selectors: tuple[tuple[str]] = None,
             max_time: int = 10,
             driver: WebDriver = None,
-            el=None
+            el: ElParent = None
     ):
         """Init the El element.
 
@@ -33,68 +36,27 @@ class El:
         :param driver: Define the driver of the element. Use for normal instance.
         :param el: Transfer El / Els instance to another El instance. Use for specifying class type.
                 If it's determined, by, selector_str, selectors attribute will be dismissed.
-                If el.driver is not None, driver attribute will be dismissed.
+                If `el.driver` is not None, driver attribute will be dismissed.
         """
-        self.max_time = max_time
-        if el:
-            self.selectors = el.selectors
-            if el.driver:
-                self.driver = el.driver
-            elif driver:
-                self.driver = driver
-        else:
-            if not selectors:
-                self.selectors = ((by, selector_str),)
-            else:
-                self.selectors = selectors
-            if driver:
-                self.driver = driver
+        super().__init__(by, selector_str, selectors, max_time, driver, el)
 
-    def __get__(self, instance, owner):
+    def __get__(self, instance, owner) -> El:
         """To binding the driver from the instance above the element."""
-        self.driver = instance.driver
+        self.driver: WebDriver = instance.driver
         return self
 
-    def __truediv__(self, other):
+    def __truediv__(self, other: ElParent) -> El:
         """Use El_1 / El_2 for cascading selectors."""
+        if not isinstance(other, ElParent):
+            return NotImplemented
         return El(selectors=self.selectors + other.selectors, max_time=self.max_time, driver=self.driver)
 
-    def __itruediv__(self, other):
-        """El_1 /= El_2 is equal to El_1 = El_1 / El_2."""
+    def __itruediv__(self, other: ElParent) -> El:
+        """El_1 /= El_2 is equal to El_1 = El_1 / El_2, but doesn't modify ID."""
+        if not isinstance(other, ElParent):
+            return NotImplemented
         self.selectors = self.selectors + other.selectors
         return self
-
-    @staticmethod
-    def single_selector_to_xpath(by: str, selector: str):
-        """Returns single selector to xpath."""
-        if by == By.XPATH or by == By.TAG_NAME:
-            return selector
-        elif by == By.ID:
-            return f'*[@id="{selector}"]'
-        elif by == By.CLASS_NAME:
-            return f'*[contains(concat(" ",@class," "), " {selector} ")]'
-        elif by == By.NAME:
-            return f'*[@name="{selector}"]'
-        elif by == By.CSS_SELECTOR:
-            return GenericTranslator().css_to_xpath('selector')
-        else:
-            raise ValueError('Only support By.XPATH, By.TAG_NAME, By.ID, By.CLASS_NAME, By.NAME and By.CSS_SELECTOR')
-
-    @property
-    def selectors_xpath(self) -> str:
-        """Returns selector to xpath."""
-        xpath = ''
-        for index, selector in enumerate(self.selectors):
-            if index != 0:
-                if selector[0] == By.XPATH:
-                    xpath += '/' + self.single_selector_to_xpath(*selector)
-                else:
-                    xpath += '//' + self.single_selector_to_xpath(*selector)
-            else:
-                if selector[0] != By.XPATH:
-                    xpath += '//'
-                xpath += self.single_selector_to_xpath(*selector)
-        return xpath
 
     def wait_for_click(self):
         """Wait until the element is clickable."""
@@ -215,7 +177,7 @@ class El:
         """Returns text. If text is None or '', return value property (mostly for input element)."""
         return self.text or self.get_property('value')
 
-    def __str__(self):
+    def __str__(self) -> str:
         try:
             return f'(El \'{self.selectors_xpath}\' at {id(self)})'
         except ValueError:

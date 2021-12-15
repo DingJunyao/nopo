@@ -13,4 +13,4 @@ Full documentation is in README.md.
 
 from .el import El
 from .els import Els
-from selenium.webdriver.common.by import By
+from .by import By

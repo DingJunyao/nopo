@@ -30,13 +30,17 @@ class GitHubPage:
         assert self.name.value == 'Ding Junyao'
 
 
+class W3SchoolsSelect(El):
+    pass
+
+
 class W3SchoolsPage:
 
     def __init__(self, drv):
         self.driver = drv
 
     iframe = El(By.ID, 'iframeResult')
-    selection = El(By.TAG_NAME, 'select')
+    selection = W3SchoolsSelect(By.TAG_NAME, 'select')
 
     @property
     def selections(self):
