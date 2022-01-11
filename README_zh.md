@@ -133,7 +133,7 @@ el2 = El(by2, selector_str2)
 example_el = el1 / el2
 ```
 
-`example_el` 的数据类型与 `el1` 相同，其选择器为 `el_1` 的选择器下执行 `el2` 的选择器，类似于使用 Selenium 中的：
+`example_el` 的数据类型与 `el1` 相同，其选择器为 `el1` 的选择器下执行 `el2` 的选择器，类似于使用 Selenium 中的：
 
 ```python
 el1 = driver.find_element.by(by1, selector_str1)
