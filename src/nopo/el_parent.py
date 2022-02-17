@@ -47,7 +47,12 @@ class ElParent:
 
     @staticmethod
     def single_selector_to_xpath(by: str, selector: str) -> str:
-        """Returns single selector to xpath."""
+        """Returns single selector to xpath.
+
+        :raise ValueError: if by is wrong
+        :raise SelectorSyntaxError: on invalid selectors,
+        :raise ExpressionError: on unknown/unsupported selectors, including pseudo-elements.
+        """
         if by == By.XPATH or by == By.TAG_NAME:
             return selector
         elif by == By.ID:
@@ -58,11 +63,25 @@ class ElParent:
             return f'*[@name="{selector}"]'
         elif by == By.CSS_SELECTOR:
             return GenericTranslator().css_to_xpath('selector')
+        elif by == By.LINK_TEXT or by == By.PARTIAL_LINK_TEXT:
+            if '"' in selector:
+                return_text = 'concat("' + selector.replace('"', '", \'"\', "') + '")'
+            else:
+                return_text = '"' + selector + '"'
+            if by == By.LINK_TEXT:
+                return f'a[text()={return_text}]'
+            else:
+                return f'a[contains(text(), {return_text})]'
         else:
-            raise ValueError('Only support By.XPATH, By.TAG_NAME, By.ID, By.CLASS_NAME, By.NAME and By.CSS_SELECTOR')
+            raise ValueError('By is wrong')
 
     @property
     def selectors_xpath(self) -> str:
+        """Convert selectors to XPath.
+
+        :raise SelectorSyntaxError: on invalid selectors,
+        :raise ExpressionError: on unknown/unsupported selectors, including pseudo-elements.
+        """
         xpath = ''
         for index, selector in enumerate(self.selectors):
             if index != 0:

@@ -3,6 +3,7 @@ from __future__ import annotations
 import time
 from typing import Optional
 
+from cssselect import ExpressionError, SelectorSyntaxError
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
@@ -61,12 +62,20 @@ class El(ElParent):
     def wait_for_click(self):
         """Wait until the element is clickable."""
         wait = WebDriverWait(self.driver, self.max_time)
-        wait.until(ec.element_to_be_clickable(self.selectors[0]))
+        try:
+            xpath = self.selectors_xpath
+            wait.until(ec.element_to_be_clickable((By.XPATH, xpath)))
+        except ValueError or SelectorSyntaxError or ExpressionError:
+            wait.until(ec.element_to_be_clickable(self.selectors[0]))
 
     def wait_for_present(self):
         """Wait until the element is present."""
         wait = WebDriverWait(self.driver, self.max_time)
-        wait.until(ec.presence_of_element_located(self.selectors[0]))
+        try:
+            xpath = self.selectors_xpath
+            wait.until(ec.presence_of_element_located((By.XPATH, xpath)))
+        except ValueError or SelectorSyntaxError or ExpressionError:
+            wait.until(ec.presence_of_element_located(self.selectors[0]))
 
     @property
     def elem_no_wait(self) -> WebElement:
@@ -180,7 +189,7 @@ class El(ElParent):
     def __str__(self) -> str:
         try:
             return f'(El \'{self.selectors_xpath}\' at {id(self)})'
-        except ValueError:
+        except ValueError or SelectorSyntaxError or ExpressionError:
             return f'(El \'{list(self.selectors)}\' at {id(self)})'
 
     __repr__ = __str__
