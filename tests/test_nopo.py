@@ -2,13 +2,10 @@ import time
 
 from selenium.webdriver.common.keys import Keys
 
-from src.nopo import El, Els, By
+from src.nopo import El, Els, By, Pg
 
 
-class GitHubPage:
-
-    def __init__(self, drv):
-        self.driver = drv
+class GitHubPage(Pg):
 
     textbox = El(By.XPATH, '//input[@aria-label="Search GitHub"]')
     main_page = El(By.TAG_NAME, 'main')
@@ -34,10 +31,7 @@ class W3SchoolsSelect(El):
     pass
 
 
-class W3SchoolsPage:
-
-    def __init__(self, drv):
-        self.driver = drv
+class W3SchoolsPage(Pg):
 
     iframe = El(By.ID, 'iframeResult')
     selection = W3SchoolsSelect(By.TAG_NAME, 'select')

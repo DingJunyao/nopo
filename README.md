@@ -32,13 +32,10 @@ Here shows a simple usage example:
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-from nopo import El, Els, By
+from nopo import El, Els, By, Pg
 
 
-class GitHubPage:
-
-    def __init__(self, drv):
-        self.driver = drv
+class GitHubPage(Pg):
 
     # Define like Selenium
     textbox = El(By.XPATH, '//input[@aria-label="Search GitHub"]')
@@ -70,7 +67,7 @@ if __name__ == '__main__':
 
 ### Defining
 
-In class which has `driver` attribute to selenium webdriver, you can define it as a class attribute:
+In class which has `driver` attribute to selenium webdriver (e.g., `nopo.Pg` class), you can define it as a class attribute:
 
 ```python
 example_el = El(by, selector_str)

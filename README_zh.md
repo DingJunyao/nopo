@@ -32,13 +32,10 @@ pip install nopo
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-from nopo import El, Els, By
+from nopo import El, Els, By, Pg
 
 
-class GitHubPage:
-
-    def __init__(self, drv):
-        self.driver = drv
+class GitHubPage(Pg):
 
     # 像 Selenium 一样定义
     textbox = El(By.XPATH, '//input[@aria-label="Search GitHub"]')
@@ -70,7 +67,7 @@ if __name__ == '__main__':
 
 ### 定义
 
-在有 `driver` 属性，且该属性指向 Selenium WebDriver 实例的类，可以定义为类属性：
+在有 `driver` 属性，且该属性指向 Selenium WebDriver 实例的类（如 `nopo.Pg` 类），可以定义为类属性：
 
 ```python
 example_el = El(by, selector_str)

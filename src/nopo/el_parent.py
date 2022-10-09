@@ -62,7 +62,7 @@ class ElParent:
         elif by == By.NAME:
             return f'*[@name="{selector}"]'
         elif by == By.CSS_SELECTOR:
-            return GenericTranslator().css_to_xpath('selector')
+            return GenericTranslator().css_to_xpath(selector)
         elif by == By.LINK_TEXT or by == By.PARTIAL_LINK_TEXT:
             if '"' in selector:
                 return_text = 'concat("' + selector.replace('"', '", \'"\', "') + '")'

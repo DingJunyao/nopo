@@ -14,3 +14,4 @@ Full documentation is in README.md.
 from .el import El
 from .els import Els
 from .by import By
+from .pg import Pg
