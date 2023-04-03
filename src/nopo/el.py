@@ -197,7 +197,7 @@ class El(ElParent):
     @property
     def is_selected(self):
         """Returns if the element is selected."""
-        return self.elem_clickable.is_selected()
+        return self.elem_clickable.is_selected
 
     # Select methods
 
@@ -212,7 +212,7 @@ class El(ElParent):
         """Returns a list of all selected options belonging to this select tag."""
         ret = []
         for opt in self.options:
-            if opt.is_selected():
+            if opt.is_selected:
                 ret.append(opt)
         return ret
 
@@ -220,7 +220,7 @@ class El(ElParent):
     def first_selected_option(self):
         """The first selected option in this select tag (or the currently selected option in a normal select)."""
         for opt in self.options:
-            if opt.is_selected():
+            if opt.is_selected:
                 return opt
         raise NoSuchElementException("No options are selected")
 
